@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
 
-const Header = ({ active, setActive, user }) => {
+const Header = ({ active, setActive, user, handleLogOut }) => {
   const userId = user?.uid;
   const userName = user?.displayName.split(" ");
 
@@ -53,14 +53,16 @@ const Header = ({ active, setActive, user }) => {
                   </span>
                   <span className="font-semibold">{userName[0]}</span>
                 </li>
-                <li>Logout</li>
+                <li onClick={handleLogOut} className="cursor-pointer">
+                  Logout
+                </li>
               </>
             ) : (
               <>
                 <li>
                   <Link
                     to="/auth"
-                    className={`mx-5 ${
+                    className={`${
                       active === "signin" ? "text-cyan-500 underline" : ""
                     }`}
                     onClick={() => setActive("signin")}
