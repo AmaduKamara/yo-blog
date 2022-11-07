@@ -8,6 +8,7 @@ import AddEditBlog from "./pages/AddEditBlog";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
+import Auth from "./pages/Auth";
 
 const App = () => {
   const [active, setActive] = useState("home");
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/create" element={<AddEditBlog />} />
         <Route path="/update/:id" element={<AddEditBlog />} />
         <Route path="/about" element={<About />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
