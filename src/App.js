@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home";
@@ -10,10 +10,13 @@ import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Auth from "./pages/Auth";
 import { auth } from "./firebase";
+import { signOut } from "firebase/auth";
 
 const App = () => {
   const [active, setActive] = useState("home");
   const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -25,9 +28,22 @@ const App = () => {
     });
   }, []);
 
+  const handleLogOut = () => {
+    signOut(auth).then(() => {
+      setUser(null);
+      setActive("signin");
+      navigate("/auth");
+    });
+  };
+
   return (
     <div>
-      <Header active={active} setActive={setActive} user={user} />
+      <Header
+        active={active}
+        setActive={setActive}
+        user={user}
+        handleLogOut={handleLogOut}
+      />
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
