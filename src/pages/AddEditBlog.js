@@ -68,8 +68,6 @@ const AddEditBlog = () => {
     file && uploadFile();
   }, [file]);
 
-  // console.log(form)
-
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.vale });
   };
