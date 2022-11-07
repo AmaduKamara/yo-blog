@@ -6,12 +6,13 @@ import Details from "./pages/Details";
 import AddEditBlog from "./pages/AddEditBlog";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import Header from "./components/Header";
 
 const App = () => {
   return (
     <div>
       <ToastContainer />
-      <h1>Yo-Blog</h1>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/details/:id" element={<Details />} />
