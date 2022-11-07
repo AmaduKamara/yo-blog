@@ -1,7 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +34,17 @@ const Auth = ({ setActive }) => {
     e.preventDefault();
 
     if (!signUp) {
+      // Check if email and password are valid
+      if (email && password) {
+        const { user } = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        setActive("home");
+      } else {
+        return toast.error("Please fill in all fields");
+      }
     } else {
       // SignUp
 
