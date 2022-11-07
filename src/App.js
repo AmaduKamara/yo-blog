@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/create" element={<AddEditBlog />} />
         <Route path="/update/:id" element={<AddEditBlog />} />
         <Route path="/about" element={<About />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/auth" element={<Auth setActive={setActive} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
