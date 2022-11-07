@@ -34,6 +34,24 @@ const Header = ({ active, setActive }) => {
           >
             About
           </Link>
+          <Link
+            to="/auth"
+            className={`mx-5 ${
+              active === "signin" ? "text-cyan-500 underline" : ""
+            }`}
+            onClick={() => setActive("signin")}
+          >
+            Signin
+          </Link>
+          <Link
+            to="/auth"
+            className={`mx-5 ${
+              active === "signup" ? "text-cyan-500 underline" : ""
+            }`}
+            onClick={() => setActive("signup")}
+          >
+            Signup
+          </Link>
         </ul>
       </nav>
     </header>
