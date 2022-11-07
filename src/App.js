@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,13 +9,25 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Auth from "./pages/Auth";
+import { auth } from "./firebase";
 
 const App = () => {
   const [active, setActive] = useState("home");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
 
   return (
     <div>
-      <Header active={active} setActive={setActive} />
+      <Header active={active} setActive={setActive} user={user} />
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
