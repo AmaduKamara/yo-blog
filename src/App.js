@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,10 +10,12 @@ import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 
 const App = () => {
+  const [active, setActive] = useState("home");
+
   return (
     <div>
+      <Header active={active} setActive={setActive} />
       <ToastContainer />
-      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/details/:id" element={<Details />} />
