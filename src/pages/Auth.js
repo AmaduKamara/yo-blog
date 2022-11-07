@@ -2,15 +2,18 @@ import React from "react";
 import { useState } from "react";
 
 const initialState = {
+  firstName: "",
+  lastName: "",
   email: "",
   passowrd: "",
+  confirmPassword: "",
 };
 
 const Auth = () => {
   const [state, setState] = useState(initialState);
   const [signUp, setSignUp] = useState(false);
 
-  const { email, password } = state;
+  const { firstName, lastName, email, password, confirmPassword } = state;
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -30,6 +33,30 @@ const Auth = () => {
           </h1>
         )}
         <form className="mt-10">
+          {signUp && (
+            <>
+              <div>
+                <input
+                  type="firstName"
+                  name="firstName"
+                  value={firstName}
+                  placeholder="First Name"
+                  onChange={handleChange}
+                  className="mb-4 py-4 px-3 rounded-md border w-full focus:outline-cyan-600"
+                />
+              </div>
+              <div>
+                <input
+                  type="lastName"
+                  name="lastName"
+                  value={lastName}
+                  placeholder="Last Name"
+                  onChange={handleChange}
+                  className="mb-4 py-4 px-3 rounded-md border w-full focus:outline-cyan-600"
+                />
+              </div>
+            </>
+          )}
           <div>
             <input
               type="email"
@@ -50,6 +77,18 @@ const Auth = () => {
               className="mb-4 py-4 px-3 rounded-md border w-full focus:outline-cyan-600"
             />
           </div>
+          {signUp && (
+            <div>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={confirmPassword}
+                placeholder="Confirm Password"
+                onChange={handleChange}
+                className="mb-4 py-4 px-3 rounded-md border w-full focus:outline-cyan-600"
+              />
+            </div>
+          )}
           <div>
             <button
               type="submit"
