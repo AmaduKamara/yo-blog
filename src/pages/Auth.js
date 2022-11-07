@@ -1,5 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   firstName: "",
@@ -9,15 +13,54 @@ const initialState = {
   confirmPassword: "",
 };
 
-const Auth = () => {
+const Auth = ({ setActive }) => {
   const [state, setState] = useState(initialState);
   const [signUp, setSignUp] = useState(false);
 
   const { firstName, lastName, email, password, confirmPassword } = state;
+  const navigate = useNavigate();
 
+  // Handle input change events
   const handleChange = (e) => {
-    e.preventDefault();
     setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submission events
+  const handleAuth = async (e) => {
+    e.preventDefault();
+
+    if (!signUp) {
+    } else {
+      // SignUp
+
+      // Check if passwwords match
+      if (password !== confirmPassword) {
+        return toast.error("Passwords do not match");
+      }
+
+      // Check if all fields are provided
+      if (!firstName || !lastName || !email || !password || !confirmPassword) {
+        return toast.error("Please fill in all fields");
+      } else {
+        // Get created user
+        const { user } = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        // Update user profile after signup
+        await updateProfile(user, {
+          displayName: `${firstName} ${lastName}`,
+        });
+
+        // Set home as active
+        setActive("home");
+        console.log(user);
+      }
+    }
+    // navigate user after signup to homepage
+    navigate("/");
   };
 
   return (
@@ -32,30 +75,30 @@ const Auth = () => {
             Sign Up
           </h1>
         )}
-        <form className="mt-10">
+        <form className="mt-10" onSubmit={handleAuth}>
           {signUp && (
-            <>
-              <div>
+            <div className="flex justify-between items-center">
+              <div className="w-1/2 mr-2">
                 <input
                   type="firstName"
                   name="firstName"
                   value={firstName}
                   placeholder="First Name"
                   onChange={handleChange}
-                  className="mb-4 py-4 px-3 rounded-md border w-full focus:outline-cyan-600"
+                  className="mb-4 py-4 px-3 rounded-md border focus:outline-cyan-600 w-full"
                 />
               </div>
-              <div>
+              <div className="w-1/2 ml-2">
                 <input
                   type="lastName"
                   name="lastName"
                   value={lastName}
                   placeholder="Last Name"
                   onChange={handleChange}
-                  className="mb-4 py-4 px-3 rounded-md border w-full focus:outline-cyan-600"
+                  className="mb-4 py-4 px-3 rounded-md border focus:outline-cyan-600 w-full"
                 />
               </div>
-            </>
+            </div>
           )}
           <div>
             <input
